@@ -1,0 +1,111 @@
+from oslo_config import cfg
+from oslo_log import log
+from oslo_db import options as db_options
+from oslo_db.sqlalchemy import enginefacade
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.sql import text
+from oslo_db.sqlalchemy import models
+
+# 初始化logger
+LOG = log.getLogger(__name__)
+
+# 配置数据库选项
+db_options.set_defaults(cfg.CONF)
+CONF = cfg.CONF
+
+# 注册日志选项
+log.register_options(CONF)
+
+# 使用 SQLAlchemy 的 declarative_base
+Base = declarative_base()
+
+# 从配置文件加载配置，这一步会解析命令行参数
+CONF(default_config_files=['config.ini'])
+
+# 设置日志
+log.setup(CONF, __name__)
+
+
+# 使用 enginefacade 装饰器形式
+@enginefacade.transaction_context_provider
+class MyContext(object):
+    "User-defined context class."
+
+
+context = MyContext()
+
+
+# 模型使用的基类
+class User(models.TimestampMixin,
+           models.ModelBase, Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255))
+    email = Column(String(255))
+
+"""
+会新增一个created_at 和 updated_at 字段
+mysql> select * from users;
++----+----------+---------------------+---------------------+------------+
+| id | name     | email               | created_at          | updated_at |
++----+----------+---------------------+---------------------+------------+
+|  1 | John Doe | johndoe@example.com | 2025-03-26 07:39:19 | NULL       |
+"""
+
+# 创建数据库引擎
+engine = enginefacade.writer.get_engine()
+
+
+# 初始化数据库（创建表）
+def initialize_db():
+    Base.metadata.create_all(engine)
+
+
+# 在数据库中创建一个用户
+@enginefacade.writer
+def create_user(context, name, email):
+    context.session.add(User(name=name, email=email))
+
+
+# 根据用户名查询用户
+@enginefacade.reader
+def get_user_by_name(context, name):
+    return context.session.query(User).filter(User.name == name).first()
+
+
+# 方案一：使用 reader 装饰器（ORM 方式）
+@enginefacade.reader
+def get_all_users1(context):
+    return context.session.query(User).all()
+
+
+# 当不需要 Session 对象时，可以使用 connection 修饰符，例如当 SQLAlchemy Core 是首选：
+# 方案二：使用 connection 装饰器（需按以下方式调整）
+@enginefacade.reader.connection
+def get_all_users2(context):
+    return context.connection.execute(text('SELECT * FROM users'))
+
+
+def main():
+    # 初始化数据库（创建表）
+    initialize_db()
+
+    # 创建一个新用户
+    create_user(context, 'John Doe', 'johndoe@example.com')
+    LOG.info(f'Created new user successfully.')
+
+    # 根据用户名查询用户
+    user = get_user_by_name(context, 'John Doe')
+    if user:
+        LOG.info(f'Found user: {user.name}, {user.email}')
+    else:
+        LOG.info('User not found.')
+
+    all_users = get_all_users2(context)
+    for user in all_users:
+        print(user.name, user.email)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,6 @@
+oslo.messaging
+oslo.config
+oslo.log
+oslo.utils
+oslo.service
+eventlet
