@@ -1,0 +1,17 @@
+[Unit]
+Description=ws-monitor service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/root/.pyenv/shims/ws_monitor --config-file /etc/ws_monitor/ws_monitor.conf
+Restart=always
+User=root
+Group=root
+StandardOutput=journal+console
+StandardError=journal+console
+KillMode=process
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

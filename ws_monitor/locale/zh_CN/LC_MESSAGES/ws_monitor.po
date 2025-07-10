@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ws_monitor\n"
+"POT-Creation-Date: 2023-10-28 14:00+0000\n"
+"PO-Revision-Date: 2023-10-28 14:00+0000\n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Starting ws-monitor..."
+msgstr "正在启动 ws-monitor..."
+
+msgid "Configuration loaded: %s"
+msgstr "配置已加载: %s"
+
+msgid "Starting monitoring loop..."
+msgstr "正在启动监控循环..."
+
+msgid "Enabled plugins: %s"
+msgstr "启用的插件: %s"
+
+msgid "Loaded plugin: %s"
+msgstr "已加载插件: %s"
+
+msgid "Plugin %s is not a subclass of BaseMonitor"
+msgstr "插件 %s 不是 BaseMonitor 的子类"
+
+msgid "Plugin %s has no '%s' class"
+msgstr "插件 %s 没有 '%s' 类"
+
+msgid "Failed to load plugin %s: %s"
+msgstr "无法加载插件 %s: %s"
+
+msgid "Error initializing plugin %s: %s"
+msgstr "初始化插件 %s 时出错: %s"
+
+msgid "Running plugin: %s"
+msgstr "正在运行插件: %s"
+
+msgid "Plugin %s failed: %s"
+msgstr "插件 %s 失败: %s"
+
+msgid "CPU Usage: %s%%"
+msgstr "CPU 使用率: %s%%"
+
+msgid "Failed to monitor CPU usage: %s"
+msgstr "无法监控 CPU 使用率: %s"
+
+msgid "Total Memory: %s MB"
+msgstr "总内存: %s MB"
+
+msgid "Available Memory: %s MB"
+msgstr "可用内存: %s MB"
+
+msgid "Used Memory: %s MB"
+msgstr "已用内存: %s MB"
+
+msgid "Memory Usage Percent: %s%%"
+msgstr "内存使用率: %s%%"
+
+msgid "Failed to monitor memory usage: %s"
+msgstr "无法监控内存使用率: %s"
+
+msgid "Total Disk Space: %s GB"
+msgstr "总磁盘空间: %s GB"
+
+msgid "Used Disk Space: %s GB"
+msgstr "已用磁盘空间: %s GB"
+
+msgid "Free Disk Space: %s GB"
+msgstr "可用磁盘空间: %s GB"
+
+msgid "Disk Usage Percent: %s%%"
+msgstr "磁盘使用率: %s%%"
+
+msgid "Failed to monitor disk usage: %s"
+msgstr "无法监控磁盘使用率: %s"
+
+msgid "Monitor tool stopped."
+msgstr "监控工具已停止。"
+
+msgid "Version: ws-monitor %s"
+msgstr "版本: ws-monitor %s"
+
+msgid "OS Info - %s: %s"
+msgstr "操作系统信息 - %s: %s"
+
+msgid "Failed to get OS info: %s"
+msgstr "无法获取操作系统信息: %s"
