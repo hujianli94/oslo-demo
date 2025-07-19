@@ -5,7 +5,7 @@
 import logging
 
 LOG = logging.getLogger(__name__)
-formatter = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 level = logging.INFO
 logging.basicConfig(level=level, format=formatter)
 
